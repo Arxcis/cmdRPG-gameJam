@@ -203,9 +203,10 @@ void openingView(){
         zzz(1000);
     }
 
-    mainMenu();
+    mainMenuView();
 }
-// VIEW: travelView between fromLocation -> toLocation, this takes length time
+
+// VIEW: travelView - between fromLocation->toLocation, this takes length time
 void travelView(string fromLocation, string toLocation, int length)
 {
 	resetScreen();
@@ -222,8 +223,10 @@ void travelView(string fromLocation, string toLocation, int length)
 	w.setWord(w.CENTER[0] - halfWay + length+1, w.CENTER[1], "> " + toLocation);
 	w.coutWindow();
 }
+
+
 // VIEW: mainMenu - 
-void mainMenu(){
+void mainMenuView(){
 
     resetScreen();
     w.clearWindow();
@@ -258,11 +261,11 @@ void mainMenu(){
     cout << "                                ";
     
     cin >> g_key;
+    cin.ignore();    cin.clear();
 }
 
 
 //// ------------------------------ MAIN ----------------------------------////
-
 
 
 int main()
