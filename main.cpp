@@ -25,13 +25,19 @@ using namespace std;
 
 //// ----------------------------- STRUCTS ------------------------------////
 
+// struct Window {}
+// Description : This struct is used to create the window object. This object
+//                is very important to the game. The window object holds
+//                information about what is on the screen at any given time.
+//                It also holds methods to change what is on the screen.
+//
 struct Window {
 
-    //  ------- Struct attributes -----------
+    //  --------- Struct attributes ----------- //
 
-        // Here is the 2d-array that is responsible for holding the information
-        //  about the window-state at any given time. 
-
+    // Description : Constant which works as a template, whenever we need to 
+    //                "clean" the window object.
+    //
     const vector<string> windowEmpty = {
     
     "                                                                      \n",
@@ -58,57 +64,73 @@ struct Window {
     };
 
 
-        // Coordinates to important points in the windowMatrix
-
+    // Description : Constants to be used for specifying relative coordinates.
+    //                Makes it really easy to change look of the game in one
+    //                place. 
+    //
     const int CENTER[2] = {35, 10};
     const int UPPER_LEFT[2] = { 0, 0 };
     const int UPPER_RIGHT[2] = { 70, 0 };
     const int LOWER_LEFT[2] = { 0,20 };
     const int LOWER_RIGHT[2] = { 70,20 };
 
-        // Arrays cannot be assigned to other arrays. So here we need to use
-        //  vectors.
+
+    // Description : A vector which holds the state of the window object.
+    // A 
+    // Arrays cannot be assigned to other arrays. So here we need to use
+    //  a vector.
+    //
     vector<string> windowState = windowEmpty;
 
 
-    // ---------- Struct methods  ---------
+    // ---------------- Struct methods  --------------- // 
 
+
+    // Description : Overwrites entire window object, with a blank template.
+    //
+    //
     void clearWindow() {     windowState = windowEmpty;    }
 
 
+    // Description : Replaces an entire row of the window object, with a new.
+    //
     // @param : int row - a number between 0-19, specifies which row to change
     // @param : string line - inputs a string of length 71, the entire row.
     // @return: void
-
-    // WORKS LIKE A CHARM !!
+    //
+    //
     void setLine(int row, string line) {
 
         windowState[row] = line;
     }
 
 
+    // Description : Places a word at a specified location within the window.
+    //               If a word overflows the window, it gets cut off.
+    //
     // @param : int row - a number between 0-19, specifies which row to change
-    // @param : int column - a number between 0-69, starting post of the word.
+    // @param : int column - a number between 0-69, starting pos. of the word.
     // @param : string word - a word of any lenght to be inserted at position.
     // @return: void
-
-    // WORKS like A CHARM !! 
+    //
+    //
     void setWord(int column, int row, string word){
-
-        // Debug info
-        //cout << row << ", "<< column << ", " << word.length() << "\n"; 
 
         for (int i = column, j= 0; i < (column + word.length()); i++, j++){
 
-            // Makes sure that the end of line is not overwritten.
-            if ( i <= 69) {
-                //cout << word[j];
+            
+            if ( i <= 69) {          // Makes sure that the end of line is not
+                                     //  overwritten.
                 windowState[row][i] = word[j];
             }
 
         }
     }
 
+
+    // Description : Prints the entire window.
+    //
+    //
     void coutWindow()  {
 
         for (int i=0; i < 20; i++){
@@ -117,49 +139,37 @@ struct Window {
     }
 }; 
 
+
 // ------------------------------ GLOBALS -----------------------------------//
 
 char g_key = ' ';
 Window w; 
 
 
+
+
 //// ----------------------- FUNCTION DECLARATIONS ------------------------////
-
-
-// -- Utility functions ----
-void zzz();                   // Cross platform sleep
-void resetScreen();           // Prints 30 \n-characters.
 
 // ----- View functions -----
 void openingTitle();
 void mainMenu();
 
+// -- Utility functions ----
+void zzz();                   // Cross platform sleep
+void resetScreen();           // Prints 30 \n-characters.
+
+
+
+
+
+
 
 //// ------------------------ FUNCTION DEFINITIONS  ---------------------- ////
-
-void zzz(int milliseconds)        // cross-platform sleep function
-{
-    #ifdef WIN32
-        Sleep(milliseconds);
-    #else
-        usleep(milliseconds * 1000);
-    #endif // win32
-}
-
-void resetScreen(){
-
-    g_key = ' ';            // Resets the global key, so it works as 
-                                  //  as intended. 
-    for (int i=0; i < 30; i++) {  // Prints 35 \n - endline characters.
-        cout << '\n';             //  effectively wipes the screen clean.
-    }
-}
-
-
-// --------------------------------- VIEWS ----------------------------------//
+//
+// ----------------------------- VIEW FUNCITONS -----------------------------//
 //   Comment:
 //    The following functions represent one view.
-//     Each view - function has the following steps:
+//     Each view - function can have the following steps:
 //       1.  Clear the screen
 //       2.  Print out the view
 //       3.  Ask for user key-input
@@ -167,8 +177,11 @@ void resetScreen(){
 //
 //    To make the game appear consistent across all views we have to     
 //     standardize the width and height of each view.
+//     The window object should make sure that width and high are constant, 
+//     between views.
 //
 //   ASCII - resolution:  70(+1 newline character) x 20 characters.
+//
 // 
 
 
@@ -206,7 +219,10 @@ void openingView(){
     mainMenuView();
 }
 
-// VIEW: travelView - between fromLocation->toLocation, this takes length time
+// VIEW: travelView - Shows animation of travelling between two cities.
+//       @param - string fromLocation - name of starting location
+//       @param - string toLocation   - name of destination
+//       @param - int    length       - animation time in seconds. 
 void travelView(string fromLocation, string toLocation, int length)
 {
 	resetScreen();
@@ -225,7 +241,10 @@ void travelView(string fromLocation, string toLocation, int length)
 }
 
 
-// VIEW: mainMenu - 
+// VIEW: mainMenu - Presents important menu options for the player, such as:
+//                   * New game
+//                   * Continue
+//                   * Exit
 void mainMenuView(){
 
     resetScreen();
@@ -264,15 +283,40 @@ void mainMenuView(){
     cin.ignore();    cin.clear();
 }
 
+//                                                                           //
+// ---------------------------- UTILITY FUNCITONS ---------------------------//
+//  Comment:                                                                  
+//      Small functions that serve as tools to do specialiced tasks in other 
+//      funcitons.
+
+
+void zzz(int milliseconds)        // cross-platform sleep function
+{
+    #ifdef WIN32
+        Sleep(milliseconds);
+    #else
+        usleep(milliseconds * 1000);
+    #endif // win32
+}
+
+void resetScreen(){
+
+    g_key = ' ';            // Resets the global key, so it won't have side-
+                            // effects across views.
+
+    for (int i=0; i < 30; i++) {  // Prints 30 \n - endline characters.
+        cout << '\n';             //  effectively wipes the screen clean.
+    }
+}
+
+
 
 //// ------------------------------ MAIN ----------------------------------////
 
 
-int main()
-{
+int main(){
 
     openingView();
-
     return 0;
 }
 
