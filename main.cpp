@@ -93,7 +93,7 @@ struct Window {
     // @return: void
 
     // WORKS like A CHARM !! 
-    void setWord(int row,int column, string word){
+    void setWord(int column, int row, string word){
 
         // Debug info
         //cout << row << ", "<< column << ", " << word.length() << "\n"; 
@@ -184,17 +184,17 @@ void openingView(){
 
         resetScreen();
 
-        w.setWord(7, 12, "The");
-        w.setWord(8, 14, "Wizard's");
-        w.setWord(9, 16, "Holiday");
+        w.setWord(12, 7, "The");
+        w.setWord(14, 8, "Wizard's");
+        w.setWord(16, 9, "Holiday");
 
         if(count % 2 == 0){
-            w.setWord(10, 16, "-----------            ");
+            w.setWord(16, 10, "-----------            ");
         } else {
-            w.setWord(10, 16, "            -----------");
+            w.setWord(16, 10, "            -----------");
         }
 
-        w.setWord(11, 17, "Copyright 2016");
+        w.setWord(17, 11, "Copyright 2016");
 
         w.coutWindow();
 
@@ -202,6 +202,8 @@ void openingView(){
 
         zzz(1000);
     }
+
+    mainMenu();
 }
 // VIEW: travelView between fromLocation -> toLocation, this takes length time
 void travelView(string fromLocation, string toLocation, int length)
@@ -211,7 +213,14 @@ void travelView(string fromLocation, string toLocation, int length)
 // VIEW: mainMenu - 
 void mainMenu(){
 
-    
+    resetScreen();
+
+    w.clearWindow();
+    w.setWord(w.CENTER[0]-5,  8, "[N]EW GAME");
+    w.setWord(w.CENTER[0]-5, 10, "[C]ONTINUE");
+    w.setWord(w.CENTER[0]-5, 12, "[E]XIT"    );
+
+    w.coutWindow();
 }
 
 
