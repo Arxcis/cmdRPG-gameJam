@@ -1,6 +1,3 @@
-
-
-
 // File    : main.cpp
 // Created : 12.09.2016
 //      by : Jonas Solsvik
@@ -30,7 +27,6 @@ using namespace std;
 
 struct Window {
 
-
     //  ------- Struct attributes -----------
 
         // Here is the 2d-array that is responsible for holding the information
@@ -38,27 +34,27 @@ struct Window {
 
     const vector<string> windowEmpty = {
     
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "                                                                     \n",
-    "\n\n\n\n"
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "                                                                      \n",
+    "\n\n\n\n\n"
     };
             // Arrays cannot be assigned to other arrays.
     vector<string> windowState = windowEmpty;
@@ -86,7 +82,7 @@ struct Window {
 
 
     // @param : int row - a number between 0-19, specifies which row to change
-    // @param : int column - a number between 0-70, starting post of the word.
+    // @param : int column - a number between 0-69, starting post of the word.
     // @param : string word - a word of any lenght to be inserted at position.
     // @return: void
 
@@ -99,7 +95,7 @@ struct Window {
         for (int i = column, j= 0; i < (column + word.length()); i++, j++){
 
             // Makes sure that the end of line is not overwritten.
-            if ( i < 71) {
+            if ( i <= 69) {
                 //cout << word[j];
                 windowState[row][i] = word[j];
             }
@@ -112,9 +108,7 @@ struct Window {
         for (int i=0; i < 20; i++){
             cout << windowState[i];
         }
-
     }
-
 }; 
 
 // ------------------------------ GLOBALS -----------------------------------//
@@ -125,9 +119,15 @@ Window w;
 
 //// ----------------------- FUNCTION DECLARATIONS ------------------------////
 
+
+// -- Utility functions ----
 void clearScreen();
 void zzz();
+
+// ----- View functions -----
 void openingTitle();
+void mainMenu();
+
 
 //// ------------------------ FUNCTION DEFINITIONS  ---------------------- ////
 
@@ -166,12 +166,15 @@ void resetScreen(){
 // 
 
 
+
+// VIEW: openingView - The first view that meets the player after loading 
+//                      the game.
+
 void openingView(){
 
-    int count = 0;
+    int count = 1;
 
-
-    while(1){
+    while(count < 6){
 
         resetScreen();
 
@@ -194,11 +197,17 @@ void openingView(){
         zzz(1000);
     }
 }
-
+// VIEW: travelView between fromLocation -> toLocation, this takes length time
 void travelView(string fromLocation, string toLocation, int length)
 {
 	
 }
+// VIEW: mainMenu - 
+void mainMenu(){
+
+
+}
+
 
 //// ------------------------------ MAIN ----------------------------------////
 
