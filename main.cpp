@@ -157,8 +157,8 @@ Window w;
 
 // ----- View functions ----- //
 void openingView();
+void travelView(string fromLocation, string toLocation, int length);
 void mainMenuView();
-void travelView();
 
 // ------ Utility functions ---- //
 void zzz(int milliseconds);                   // Cross platform sleep
