@@ -34,7 +34,7 @@ using namespace std;
 struct Window {
 
     //  --------- Struct attributes ----------- //
-
+    //
     // Description : Constant which works as a template, whenever we need to 
     //                "clean" the window object.
     //
@@ -84,8 +84,7 @@ struct Window {
 
 
     // ---------------- Struct methods  --------------- // 
-
-
+    //
     // Description : Overwrites entire window object, with a blank template.
     //
     //
@@ -140,21 +139,26 @@ struct Window {
 }; 
 
 
+
+
+
 // ------------------------------ GLOBALS -----------------------------------//
 
-char g_key = ' ';
+char globalKey = ' ';
 Window w; 
+
 
 
 
 
 //// ----------------------- FUNCTION DECLARATIONS ------------------------////
 
-// ----- View functions -----
-void openingTitle();
-void mainMenu();
+// ----- View functions ----- //
+void openingView();
+void mainMenuView();
+void travelView();
 
-// -- Utility functions ----
+// ------ Utility functions ---- //
 void zzz();                   // Cross platform sleep
 void resetScreen();           // Prints 30 \n-characters.
 
@@ -164,31 +168,31 @@ void resetScreen();           // Prints 30 \n-characters.
 
 
 
+
 //// ------------------------ FUNCTION DEFINITIONS  ---------------------- ////
-//
+
+//                                                                           //
 // ----------------------------- VIEW FUNCITONS -----------------------------//
 //   Comment:
 //    The following functions represent one view.
 //     Each view - function can have the following steps:
 //       1.  Clear the screen
-//       2.  Print out the view
-//       3.  Ask for user key-input
+//       2.  Print out the new view
+//       3.  Ask for user key-input to globalKey;
 //       4.  Make a descision based on that input
 //
 //    To make the game appear consistent across all views we have to     
 //     standardize the width and height of each view.
-//     The window object should make sure that width and high are constant, 
-//     between views.
+//     The window object should make sure that width and high are consistent
+//     across views. 
 //
 //   ASCII - resolution:  70(+1 newline character) x 20 characters.
 //
-// 
-
-
+ 
 
 // VIEW: openingView - The first view that meets the player after loading 
 //                      the game.
-
+//
 void openingView(){
 
     int count = 1;
@@ -219,25 +223,26 @@ void openingView(){
     mainMenuView();
 }
 
+
 // VIEW: travelView - Shows animation of travelling between two cities.
 //       @param - string fromLocation - name of starting location
 //       @param - string toLocation   - name of destination
 //       @param - int    length       - animation time in seconds. 
 void travelView(string fromLocation, string toLocation, int length)
 {
-	resetScreen();
-	string distance;
-	int halfWay = length / 2; //this is unprecise
-	w.setWord(w.CENTER[0] - fromLocation.length() - halfWay, w.CENTER[1], fromLocation);
-	for (int i = 0; i < length; i++)
-	{
-		w.setWord(w.CENTER[0] - halfWay + i, w.CENTER[1], fromLocation + distance);
-		distance += " -";
-		zzz(1000);
-	}
-	//as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
-	w.setWord(w.CENTER[0] - halfWay + length+1, w.CENTER[1], "> " + toLocation);
-	w.coutWindow();
+    resetScreen();
+    string distance;
+    int halfWay = length / 2; //this is unprecise
+    w.setWord(w.CENTER[0] - fromLocation.length() - halfWay, w.CENTER[1], fromLocation);
+    for (int i = 0; i < length; i++)
+    {
+        w.setWord(w.CENTER[0] - halfWay + i, w.CENTER[1], fromLocation + distance);
+        distance += " -";
+        zzz(1000);
+    }
+    //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
+    w.setWord(w.CENTER[0] - halfWay + length+1, w.CENTER[1], "> " + toLocation);
+    w.coutWindow();
 }
 
 
@@ -279,9 +284,10 @@ void mainMenuView(){
     w.coutWindow();
     cout << "                                ";
     
-    cin >> g_key;
+    cin >> globalKey;
     cin.ignore();    cin.clear();
 }
+
 
 //                                                                           //
 // ---------------------------- UTILITY FUNCITONS ---------------------------//
@@ -301,7 +307,7 @@ void zzz(int milliseconds)        // cross-platform sleep function
 
 void resetScreen(){
 
-    g_key = ' ';            // Resets the global key, so it won't have side-
+    globalKey = ' ';         // Resets the global key, so it won't have side-
                             // effects across views.
 
     for (int i=0; i < 30; i++) {  // Prints 30 \n - endline characters.
