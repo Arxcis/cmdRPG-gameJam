@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 # Mac - crap
 *.DS_store
 
+=======
+>>>>>>> 9a006edc319c44abc5f90686001693ef089806be
 # Compiled Object files
 *.slo
 *.lo
@@ -30,4 +33,7 @@
 *.exe
 *.out
 *.app
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a006edc319c44abc5f90686001693ef089806be
