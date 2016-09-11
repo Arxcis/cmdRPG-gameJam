@@ -14,7 +14,7 @@
 
 
 #include <iostream>
-#include "ncurses.h"   // Have to add "-lncurses" in Build Settings under 
+#include <ncurses.h>   // Have to add "-lncurses" in Build Settings under 
                        //  other Linker flags.
 
 #ifdef WIN32
@@ -47,8 +47,9 @@ namespace global {
 
 int main(){
 
+    // ----- INIT ncurses and openingSequence
+    initscr();
     openingTitle();
-    mainMenu();
 
     return 0;
 }
@@ -117,6 +118,7 @@ cout<< "===================================================================\n"
     << "===================================================================\n";
 
     cin.ignore(); cin.clear();
+    mainMenu();
 }
 
 void mainMenu(){
@@ -214,7 +216,7 @@ cout<< "===================================================================\n"
     << "    Sailing the seas...                                            \n"
     << "                                                                   \n"
     << "                                                                   \n";
-    getyx(stdscr, y, x);         // save current pos
+    getyx(stdscr, y, x);              // save current pos
 
 cout<< "                                                                   \n"
     << "                                                                   \n"
@@ -228,6 +230,7 @@ cout<< "                                                                   \n"
     << "                                                                   \n"
     << "===================================================================\n";
 
+    cout << x << " , " <<y;
 
     int i;
     while(1){
@@ -237,11 +240,13 @@ cout<< "                                                                   \n"
         // Y U NO WORK MOVE(y, x) :'(  ???????????? 
 
         clrtoeol();            // ncurses - clrtoeol() - clears a line.
+
         if(i % 2 == 0){
 
 cout <<"       YORK  - - - - - - - -  >  BERGEN                            \n";
 
         }
+
         zzz(1000);
         i++;
     }
