@@ -14,7 +14,8 @@
 
 
 #include <iostream>
-#include "ncurses.h"
+#include "ncurses.h"   // Have to add "-lncurses" in Build Settings under 
+                       //  other Linker flags.
 
 #ifdef WIN32
 #include <windows.h>
@@ -232,6 +233,9 @@ cout<< "                                                                   \n"
     while(1){
 
         move(y, 0);            // ncurses - move(x,y)  - moves the cursor.
+
+        // Y U NO WORK MOVE(y, x) :'(  ???????????? 
+
         clrtoeol();            // ncurses - clrtoeol() - clears a line.
         if(i % 2 == 0){
 
