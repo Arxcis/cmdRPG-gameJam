@@ -2,7 +2,7 @@
 // Created : 12.09.2016
 //      by : Jonas Solsvik
 //
-// Authors : 
+// Authors : Arxcis, Stektpotet, Amici, Marco
 // 
 // Description : This is a version of the game proposed at the cmdRPG-gamejam,
 //                held at baserom on saturday and sunday.
@@ -10,15 +10,15 @@
 //                single file. 
 
 
-#include <vector>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #ifdef WIN32
 #include <windows.h>
 #else
 #include <unistd.h>
-#endif // win32
+#endif                  // Used to get sleep function cross platform
 
 using namespace std;
 
