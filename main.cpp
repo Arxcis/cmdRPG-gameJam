@@ -56,7 +56,18 @@ struct Window {
     "                                                                      \n",
     "\n\n\n\n\n"
     };
-            // Arrays cannot be assigned to other arrays.
+
+
+        // Coordinates to important points in the windowMatrix
+
+    const int CENTER[2] = {35, 10};
+    const int UPPER_LEFT[2] = { 0, 0 };
+    const int UPPER_RIGHT[2] = { 70, 0 };
+    const int LOWER_LEFT[2] = { 0,20 };
+    const int LOWER_RIGHT[2] = { 70,20 };
+
+        // Arrays cannot be assigned to other arrays. So here we need to use
+        //  vectors.
     vector<string> windowState = windowEmpty;
 
 
@@ -64,11 +75,6 @@ struct Window {
 
     void clearWindow() {     windowState = windowEmpty;    }
 
-	const int center[2] = {35, 10};
-	const int upperLeft[2] = { 0, 0 };
-	const int upperRight[2] = { 70, 0 };
-	const int lowerLeft[2] = { 0,20 };
-	const int lowerRight[2] = { 70,20 };
 
     // @param : int row - a number between 0-19, specifies which row to change
     // @param : string line - inputs a string of length 71, the entire row.
@@ -205,7 +211,7 @@ void travelView(string fromLocation, string toLocation, int length)
 // VIEW: mainMenu - 
 void mainMenu(){
 
-
+    
 }
 
 
