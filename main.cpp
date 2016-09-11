@@ -68,6 +68,11 @@ struct Window {
 
     void clearWindow() {     windowState = windowEmpty;    }
 
+	const int center[2] = {35, 10};
+	const int upperLeft[2] = { 0, 0 };
+	const int upperRight[2] = { 70, 0 };
+	const int lowerLeft[2] = { 0,20 };
+	const int lowerRight[2] = { 70,20 };
 
     // @param : int row - a number between 0-19, specifies which row to change
     // @param : string line - inputs a string of length 71, the entire row.
@@ -86,7 +91,7 @@ struct Window {
     // @return: void
 
     // WORKS like A CHARM !! 
-    void setWord(uint row, uint column, string word){
+    void setWord(int row,int column, string word){
 
         // Debug info
         //cout << row << ", "<< column << ", " << word.length() << "\n"; 
@@ -190,11 +195,17 @@ void openingView(){
     }
 }
 
+void travelView(string fromLocation, string toLocation, int length)
+{
+	
+}
 
 //// ------------------------------ MAIN ----------------------------------////
 
 
-int main(){
+
+int main()
+{
 
     openingView();
 
