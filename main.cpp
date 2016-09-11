@@ -208,7 +208,19 @@ void openingView(){
 // VIEW: travelView between fromLocation -> toLocation, this takes length time
 void travelView(string fromLocation, string toLocation, int length)
 {
-	
+	resetScreen();
+	string distance;
+	int halfWay = length / 2; //this is unprecise
+	w.setWord(w.CENTER[0] - fromLocation.length() - halfWay, w.CENTER[1], fromLocation);
+	for (int i = 0; i < length; i++)
+	{
+		w.setWord(w.CENTER[0] - halfWay + i, w.CENTER[1], fromLocation + distance);
+		distance += " -";
+		zzz(1000);
+	}
+	//as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
+	w.setWord(w.CENTER[0] - halfWay + length+1, w.CENTER[1], "> " + toLocation);
+	w.coutWindow();
 }
 // VIEW: mainMenu - 
 void mainMenu(){
