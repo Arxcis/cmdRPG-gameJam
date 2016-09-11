@@ -67,12 +67,14 @@ struct Window {
     // Description : Constants to be used for specifying relative coordinates.
     //                Makes it really easy to change look of the game in one
     //                place. 
-    //
-    const int CENTER[2] = {35, 10};
+    //              
+    const int WIDTH = 70;
+    const int HEIGHT = 20;
+    const int CENTER[2] = { WIDTH/2, HEIGHT/2 };
     const int UPPER_LEFT[2] = { 0, 0 };
-    const int UPPER_RIGHT[2] = { 70, 0 };
-    const int LOWER_LEFT[2] = { 0,20 };
-    const int LOWER_RIGHT[2] = { 70,20 };
+    const int UPPER_RIGHT[2] = { WIDTH, 0 };
+    const int LOWER_LEFT[2] = { 0, HEIGHT };
+    const int LOWER_RIGHT[2] = { WIDTH, HEIGHT };
 
 
     // Description : A vector which holds the state of the window object.
@@ -159,7 +161,7 @@ void mainMenuView();
 void travelView();
 
 // ------ Utility functions ---- //
-void zzz();                   // Cross platform sleep
+void zzz(int milliseconds);                   // Cross platform sleep
 void resetScreen();           // Prints 30 \n-characters.
 
 
