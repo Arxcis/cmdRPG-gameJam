@@ -127,8 +127,8 @@ Window w;
 
 
 // -- Utility functions ----
-void clearScreen();
-void zzz();
+void zzz();                   // Cross platform sleep
+void resetScreen();           // Prints 30 \n-characters.
 
 // ----- View functions -----
 void openingTitle();
@@ -226,13 +226,38 @@ void travelView(string fromLocation, string toLocation, int length)
 void mainMenu(){
 
     resetScreen();
-
     w.clearWindow();
+
+    w.setLine(4,
+   "                   ================================                   \n");
+    w.setLine(5,
+   "                   |                              |                   \n");
+    w.setLine(6,
+   "                   |                              |                   \n");
+    w.setLine(7,
+   "                   *                              *                   \n");
+
+
     w.setWord(w.CENTER[0]-5,  8, "[N]EW GAME");
     w.setWord(w.CENTER[0]-5, 10, "[C]ONTINUE");
     w.setWord(w.CENTER[0]-5, 12, "[E]XIT"    );
 
+
+    w.setLine(14,
+   "                  *                                *                  \n");
+    w.setLine(15,
+   "                  |                                |                  \n");
+    w.setLine(16,
+   "                  ==================================                  \n");
+    w.setLine(17,
+   "                  [N]+enter | [C]+enter | [E]+Enter                   \n");
+    w.setLine(18,
+   "                  ==================================                  \n");
+
     w.coutWindow();
+    cout << "                                ";
+    
+    cin >> g_key;
 }
 
 
