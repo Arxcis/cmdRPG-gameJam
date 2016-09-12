@@ -102,9 +102,16 @@ struct Window {
     //
     void setLine(int row, string line) {
 
-        windowState[row] = line;
+        windowState[row] = line + "\n";
     }
-
+	void setWindow(string lines[20]) {
+		
+		for (int row = 0; row < 20; row++)
+		{
+			windowState[row] = lines[row] + "\n";
+		}
+		
+	}
 
     // Description : Places a word at a specified location within the window.
     //               If a word overflows the window, it gets cut off.
@@ -140,7 +147,35 @@ struct Window {
     }
 }; 
 
+struct Rect
+{
+	struct Vector2
+	{
+		int x = 0, y = 0;
+	};
 
+	Vector2 position;	//position of the rectangle
+	const int* x = &position.x;
+	const int* y = &position.y;
+	Vector2 size;		//size of rectangle
+	const int* width = &size.x;
+	const int* height = &size.y;
+	int xMax()
+	{
+		return *x + *width - 1;
+	}
+	int yMax()
+	{
+		return *y + *height - 1;
+	}
+	Rect(int rectX, int rectY, int rectWidth, int rectHeight)
+	{
+		position.x = rectX;
+		position.y = rectY;
+		size.x = rectWidth;
+		size.y = rectHeight;
+	}
+};
 
 
 
@@ -173,7 +208,67 @@ void resetScreen();           // Prints 30 \n-characters.
 
 //// ------------------------ FUNCTION DEFINITIONS  ---------------------- ////
 
-//                                                                           //
+
+// ------------------------------ DESIGN VIEW FUNCITONS ------------------------------//
+//   Comment:
+//    The following helperfunctions generate parts of a view.
+//     Each design view function:
+//       1.	 Defaults to not reseting the view, as they're suppose to work in layers.
+//       2.  Prints out part of a view e.g. a box aroun some text from a view-function
+//
+//    To make the game appear consistent across all views we have to     
+//     standardize the width and height of each view.
+//     The window object should make sure that width and high are consistent
+//     across views. 
+//
+//   ASCII - resolution:  70(0-69 +1 newline character) x 20 lines (0-19).
+//
+
+// DESIGN: borders - generates borders for your window.
+//       @param - resetView - force the view to clear before making borders
+void box(Rect screenRectangle, bool resetView = false)
+{
+	if (resetView)
+	{
+		resetScreen();
+	}
+	string horizLine = "+";
+	for (int i = 1; i < *screenRectangle.width - 1; i++)
+	{
+		horizLine += "-";
+	}
+	horizLine += "+";
+
+	w.setWord(*screenRectangle.x, *screenRectangle.y, horizLine);
+	for (int i = 1; i < *screenRectangle.height; i++)
+	{
+		w.setWord(*screenRectangle.x, *screenRectangle.y + i, "|");
+		w.setWord(screenRectangle.xMax(), *screenRectangle.y + i, "|");
+	}
+	w.setWord(*screenRectangle.x, screenRectangle.yMax(), horizLine);
+	w.coutWindow();
+}
+
+
+// DESIGN: borders - generates borders for your window.
+//       @param - resetView - force the view to clear before making borders
+void borders(bool resetView = false)
+{
+	box(Rect(0, 0, 70, 20));//BOX the whole screen
+	//if (resetView)
+	//{
+	//	resetScreen();
+	//}
+	//w.setLine(0, "+--------------------------------------------------------------------+");
+	//for (int i = 1; i < 19; i++)
+	//{
+	//	w.setWord(0, i, "|");
+	//	w.setWord(69, i, "|");
+	//}
+	//w.setLine(19, "+--------------------------------------------------------------------+");
+	//w.coutWindow();
+}
+
 // ----------------------------- VIEW FUNCITONS -----------------------------//
 //   Comment:
 //    The following functions represent one view.
@@ -188,7 +283,7 @@ void resetScreen();           // Prints 30 \n-characters.
 //     The window object should make sure that width and high are consistent
 //     across views. 
 //
-//   ASCII - resolution:  70(+1 newline character) x 20 characters.
+//   ASCII - resolution:  70(0-69 +1 newline character) x 20 lines (0-19).
 //
  
 
@@ -233,20 +328,21 @@ void openingView(){
 void travelView(string fromLocation, string toLocation, int length)
 {
     resetScreen();
-    string distance;
     int halfWay = length / 2; //this is unprecise
     w.setWord(w.CENTER[0] - fromLocation.length() - halfWay, w.CENTER[1], fromLocation);
+	w.coutWindow();
     for (int i = 0; i < length; i++)
     {
-        w.setWord(w.CENTER[0] - halfWay + i, w.CENTER[1], fromLocation + distance);
-        distance += " -";
+        w.setWord(w.CENTER[0] - halfWay + i, w.CENTER[1], "-");
+		resetScreen();
+		w.coutWindow();
         zzz(1000);
     }
     //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
-    w.setWord(w.CENTER[0] - halfWay + length+1, w.CENTER[1], "> " + toLocation);
+    w.setWord(w.CENTER[0] - halfWay + length, w.CENTER[1], ">" + toLocation);
+	resetScreen();
     w.coutWindow();
 }
-
 
 // VIEW: mainMenu - Presents important menu options for the player, such as:
 //                   * New game
@@ -309,12 +405,16 @@ void zzz(int milliseconds)        // cross-platform sleep function
 
 void resetScreen(){
 
+#ifdef WIN32
+	system("cls");
+#else
     globalKey = ' ';         // Resets the global key, so it won't have side-
                             // effects across views.
 
     for (int i=0; i < 30; i++) {  // Prints 30 \n - endline characters.
         cout << '\n';             //  effectively wipes the screen clean.
     }
+#endif // WIN32
 }
 
 
@@ -323,8 +423,11 @@ void resetScreen(){
 
 
 int main(){
+	openingView();
+	//Add design layers - These you could potentially use inside the view-functions aswell
+	borders();
+	box(Rect(10, 6, 40, 7));
 
-    openingView();
     return 0;
 }
 
