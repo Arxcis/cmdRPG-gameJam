@@ -1,5 +1,6 @@
 # Mac - crap
 *.DS_store
+*.ipch
 
 # Compiled Object files
 *.slo
@@ -45,6 +46,7 @@
 *.vcxproj.filters
 *.sdf
 *.opensdf
+*.VC.opendb
 main
 
 Debug/*
