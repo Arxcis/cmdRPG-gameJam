@@ -154,12 +154,14 @@ struct Window {
     }
 }; 
 
-struct Rect
-{
-	struct Vector2
-	{
-		int x = 0, y = 0;
-	};
+
+struct Vector2 {
+    
+    int x = 0, y = 0;
+};
+
+
+struct Rect {
 
 	Vector2 position;	//position of the rectangle
 	const int* x = &position.x;
