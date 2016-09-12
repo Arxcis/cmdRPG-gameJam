@@ -138,8 +138,22 @@ struct Window {
                                      //  overwritten.
                 windowState[row][i] = str[j];
             }
-
         }
+    }
+
+    void setStringList(int column, int row, vector<string> stringList){
+
+        string str;
+        unsigned long length = stringList.size(); // the return type is 'ulong'
+
+        for (int i = row, j = 0; j < length && i <= 19; i++, j++) {
+            str = stringList[j];
+
+            for (int k = column, l = 0; k < (column + str.length()); k++, l++){
+
+                windowState[i][k] = str[l];
+            };
+        };
     }
 
 
@@ -155,10 +169,7 @@ struct Window {
 }; 
 
 
-struct Vector2 {
-    
-    int x = 0, y = 0;
-};
+struct Vector2 {    int x = 0, y = 0;   };
 
 
 struct Rect {
@@ -212,6 +223,7 @@ void mainMenuView();
 void zzz(int milliseconds);                   // Cross platform sleep
 void resetScreen();           // Prints 30 \n-characters.
 
+void testing();
 
 
 
@@ -267,13 +279,14 @@ void box(Rect screenRectangle, bool resetView)
 
 // DESIGN: borders - generates borders for your window.
 //       @param - resetView - force the view to clear before making borders
-void borders(bool resetView)
+void borders(bool clearView)
 {
+    if (clearView) {
+        w.clearWindow();
+    }
+
 	box(Rect(0, 0, 70, 20));//BOX the whole screen
-	//if (resetView)
-	//{
-	//	resetScreen();
-	//}
+
 	//w.setLine(0, "+--------------------------------------------------------------------+");
 	//for (int i = 1; i < 19; i++)
 	//{
@@ -438,15 +451,33 @@ void resetScreen(){
 
 
 int main(){
-	//openingView();
 
-	//Add design layers - These you could potentially use inside the view-functions aswell
-	borders();
-	box(Rect(10, 6, 40, 7));
+	//openingView();
+    testing(); 
 
     return 0;
 }
 
+void testing(){
+
+    // This is meant to be a function with no other purpose than to pump
+    //  out dirty function calls. 
+
+    //Add design layers - These you could potentially use inside the view-functions aswell
+    borders();
+    box(Rect(10, 6, 40, 7));
+
+    zzz(1000);
+
+    borders(true);
+
+    resetScreen();  
+    vector<string> msg = { "My", "name", "is", "Jonas"};
+    w.setStringList(10, 3, msg);
+    w.coutWindow();
+
+
+}
 
 
 
