@@ -190,6 +190,10 @@ Window w;
 
 //// ----------------------- FUNCTION DECLARATIONS ------------------------////
 
+// ----- Design functions ------- // 
+void borders(bool resetView = false);
+void box(Rect screenRectangle, bool resetView = false);
+
 // ----- View functions ----- //
 void openingView();
 void travelView(string fromLocation, string toLocation, int length);
@@ -209,12 +213,14 @@ void resetScreen();           // Prints 30 \n-characters.
 //// ------------------------ FUNCTION DEFINITIONS  ---------------------- ////
 
 
-// ------------------------------ DESIGN VIEW FUNCITONS ------------------------------//
+// --------------------------- DESIGN VIEW FUNCITONS------------------------//
 //   Comment:
 //    The following helperfunctions generate parts of a view.
 //     Each design view function:
-//       1.	 Defaults to not reseting the view, as they're suppose to work in layers.
-//       2.  Prints out part of a view e.g. a box aroun some text from a view-function
+//       1.	 Defaults to not reseting the view, as they're suppose to work in 
+//            layers.
+//       2.  Prints out part of a view e.g. a box around some text from a 
+//            view-function.
 //
 //    To make the game appear consistent across all views we have to     
 //     standardize the width and height of each view.
@@ -226,7 +232,7 @@ void resetScreen();           // Prints 30 \n-characters.
 
 // DESIGN: borders - generates borders for your window.
 //       @param - resetView - force the view to clear before making borders
-void box(Rect screenRectangle, bool resetView = false)
+void box(Rect screenRectangle, bool resetView)
 {
 	if (resetView)
 	{
@@ -252,7 +258,7 @@ void box(Rect screenRectangle, bool resetView = false)
 
 // DESIGN: borders - generates borders for your window.
 //       @param - resetView - force the view to clear before making borders
-void borders(bool resetView = false)
+void borders(bool resetView)
 {
 	box(Rect(0, 0, 70, 20));//BOX the whole screen
 	//if (resetView)
@@ -423,7 +429,8 @@ void resetScreen(){
 
 
 int main(){
-	openingView();
+	//openingView();
+
 	//Add design layers - These you could potentially use inside the view-functions aswell
 	borders();
 	box(Rect(10, 6, 40, 7));
