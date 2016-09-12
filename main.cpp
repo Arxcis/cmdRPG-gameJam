@@ -252,13 +252,13 @@ void box(Rect screenRectangle, bool resetView)
 	}
 	horizLine += "+";
 
-	w.setWord(*screenRectangle.x, *screenRectangle.y, horizLine);
+	w.setString(*screenRectangle.x, *screenRectangle.y, horizLine);
 	for (int i = 1; i < *screenRectangle.height; i++)
 	{
-		w.setWord(*screenRectangle.x, *screenRectangle.y + i, "|");
-		w.setWord(screenRectangle.xMax(), *screenRectangle.y + i, "|");
+		w.setString(*screenRectangle.x, *screenRectangle.y + i, "|");
+		w.setString(screenRectangle.xMax(), *screenRectangle.y + i, "|");
 	}
-	w.setWord(*screenRectangle.x, screenRectangle.yMax(), horizLine);
+	w.setString(*screenRectangle.x, screenRectangle.yMax(), horizLine);
 	w.coutWindow();
 }
 
@@ -275,8 +275,8 @@ void borders(bool resetView)
 	//w.setLine(0, "+--------------------------------------------------------------------+");
 	//for (int i = 1; i < 19; i++)
 	//{
-	//	w.setWord(0, i, "|");
-	//	w.setWord(69, i, "|");
+	//	w.setString(0, i, "|");
+	//	w.setString(69, i, "|");
 	//}
 	//w.setLine(19, "+--------------------------------------------------------------------+");
 	//w.coutWindow();
@@ -311,17 +311,17 @@ void openingView(){
 
         resetScreen();
 
-        w.setWord(12, 7, "The");
-        w.setWord(14, 8, "Wizard's");
-        w.setWord(16, 9, "Holiday");
+        w.setString(12, 7, "The");
+        w.setString(14, 8, "Wizard's");
+        w.setString(16, 9, "Holiday");
 
         if(count % 2 == 0){
-            w.setWord(16, 10, "-----------            ");
+            w.setString(16, 10, "-----------            ");
         } else {
-            w.setWord(16, 10, "            -----------");
+            w.setString(16, 10, "            -----------");
         }
 
-        w.setWord(17, 11, "Copyright 2016");
+        w.setString(17, 11, "Copyright 2016");
 
         w.coutWindow();
 
@@ -342,17 +342,17 @@ void travelView(string fromLocation, string toLocation, int length)
 {
     resetScreen();
     int halfWay = length / 2; //this is unprecise
-    w.setWord(w.CENTER[0] - fromLocation.length() - halfWay, w.CENTER[1], fromLocation);
+    w.setString(w.CENTER[0] - fromLocation.length() - halfWay, w.CENTER[1], fromLocation);
 	w.coutWindow();
     for (int i = 0; i < length; i++)
     {
-        w.setWord(w.CENTER[0] - halfWay + i, w.CENTER[1], "-");
+        w.setString(w.CENTER[0] - halfWay + i, w.CENTER[1], "-");
 		resetScreen();
 		w.coutWindow();
         zzz(1000);
     }
     //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
-    w.setWord(w.CENTER[0] - halfWay + length, w.CENTER[1], ">" + toLocation);
+    w.setString(w.CENTER[0] - halfWay + length, w.CENTER[1], ">" + toLocation);
 	resetScreen();
     w.coutWindow();
 }
@@ -376,9 +376,9 @@ void mainMenuView(){
    "                   *                              *                   \n");
 
 
-    w.setWord(w.CENTER[0]-5,  8, "[N]EW GAME");
-    w.setWord(w.CENTER[0]-5, 10, "[C]ONTINUE");
-    w.setWord(w.CENTER[0]-5, 12, "[E]XIT"    );
+    w.setString(w.CENTER[0]-5,  8, "[N]EW GAME");
+    w.setString(w.CENTER[0]-5, 10, "[C]ONTINUE");
+    w.setString(w.CENTER[0]-5, 12, "[E]XIT"    );
 
 
     w.setLine(14,
