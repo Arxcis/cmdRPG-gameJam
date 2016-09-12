@@ -93,6 +93,21 @@ struct Window {
     void clearWindow() {     windowState = windowEmpty;    }
 
 
+    void setWindow(string lines[20]) {
+        
+        for (int row = 0; row < 20; row++)
+        {
+            windowState[row] = lines[row] + "\n";
+        }
+        
+    }
+
+    void howAboutWritingSetWindowLikeThis(vector<string> stringvec20Lines){
+
+        windowState = stringvec20Lines;
+
+    }
+
     // Description : Replaces an entire row of the window object, with a new.
     //
     // @param : int row - a number between 0-19, specifies which row to change
@@ -104,32 +119,24 @@ struct Window {
 
         windowState[row] = line + "\n";
     }
-	void setWindow(string lines[20]) {
-		
-		for (int row = 0; row < 20; row++)
-		{
-			windowState[row] = lines[row] + "\n";
-		}
-		
-	}
 
-    // Description : Places a word at a specified location within the window.
-    //               If a word overflows the window, it gets cut off.
+
+    // Description : Places a string at a specified location within the window.
+    //               If a str overflows the window, it gets cut off.
     //
     // @param : int row - a number between 0-19, specifies which row to change
     // @param : int column - a number between 0-69, starting pos. of the word.
-    // @param : string word - a word of any lenght to be inserted at position.
+    // @param : string str - a string of any lenght to be inserted at position.
     // @return: void
     //
     //
-    void setWord(int column, int row, string word){
+    void setString(int column, int row, string str){
 
-        for (int i = column, j= 0; i < (column + word.length()); i++, j++){
+        for (int i = column, j= 0; i < (column + str.length()); i++, j++){
 
-            
             if ( i <= 69) {          // Makes sure that the end of line is not
                                      //  overwritten.
-                windowState[row][i] = word[j];
+                windowState[row][i] = str[j];
             }
 
         }
