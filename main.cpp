@@ -141,7 +141,7 @@ struct Window {
         }
     }
 
-    void setStringList(int column, int row, vector<string> stringList){
+    void setText(int column, int row, vector<string> stringList){
 
         string str;
         unsigned long length = stringList.size(); // the return type is 'ulong'
@@ -471,9 +471,15 @@ void testing(){
 
     borders(true);
 
-    resetScreen();  
-    vector<string> msg = { "My", "name", "is", "Jonas"};
-    w.setStringList(10, 3, msg);
+    resetScreen();    // Bumps old frame out of sight
+            
+
+    vector<string> text = { 
+                "My name is Jonas,", 
+                " and I'm carrying the wheel.",
+                "  Thanks for all you've shown us,",
+                "   This is how it feels... ! :)"};
+    w.setText(10, 3, text);                      
     w.coutWindow();
 
 
