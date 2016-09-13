@@ -139,6 +139,21 @@ struct Window {
     void clearWindow() {     windowState = windowEmpty;    }
 
 
+    void setWindow(string lines[20]) {
+        
+        for (int row = 0; row < 20; row++)
+        {
+            windowState[row] = lines[row] + "\n";
+        }
+        
+    }
+
+    void howAboutWritingSetWindowLikeThis(vector<string> stringvec20Lines){
+
+        windowState = stringvec20Lines;
+
+    }
+
     // Description : Replaces an entire row of the window object, with a new.
     //
     // @param : int row - a number between 0-19, specifies which row to change
@@ -150,38 +165,46 @@ struct Window {
 
         windowState[row] = line + "\n";
     }
-	void setWindow(string lines[20]) {
-		
-		for (int row = 0; row < 20; row++)
-		{
-			windowState[row] = lines[row] + "\n";
-		}
-		
-	}
 
-    // Description : Places a word at a specified location within the window.
-    //               If a word overflows the window, it gets cut off.
+
+    // Description : Places a string at a specified location within the window.
+    //               If a str overflows the window, it gets cut off.
     //
 	// @param : int column - a number between 0-69, starting pos. of the word.
     // @param : int row - a number between 0-19, specifies which row to change
-    // @param : string word - a word of any lenght to be inserted at position.
+    // @param : string str - a word of any lenght to be inserted at position.
+	// @param : bool centered - makes the word shift over so 'column' will be in the center of the word
     // @return: void
     //
     //
-    void setWord(int column, int row, string word, bool centered = false){
+    void setWord(int column, int row, string str, bool centered = false){
 		if (centered)
 		{
-			column -= word.length() / 2;
+			column -= str.length() / 2;
 		}
-        for (int i = column, j= 0; i < (column + word.length()); i++, j++){
+        for (int i = column, j= 0; i < (column + str.length()); i++, j++){
 
             
             if ( i < 70) {          // Makes sure that the end of line is not
                                      //  overwritten.
-                windowState[row][i] = word[j];
+                windowState[row][i] = str[j];
             }
-
         }
+    }
+
+    void setText(int column, int row, vector<string> stringList){
+
+        string str;
+        unsigned long length = stringList.size(); // the return type is 'ulong'
+
+        for (int i = row, j = 0; j < length && i <= 19; i++, j++) {
+            str = stringList[j];
+
+            for (int k = column, l = 0; k < (column + str.length()); k++, l++){
+
+                windowState[i][k] = str[l];
+            };
+        };
     }
 
 
@@ -196,8 +219,6 @@ struct Window {
     }
 }; 
 
-
-
 // ------------------------------ GLOBALS -----------------------------------//
 
 char globalKey = ' ';
@@ -205,13 +226,12 @@ Window w;
 
 
 
-
-
 //// ----------------------- FUNCTION DECLARATIONS ------------------------////
 
+
 // ----- GUI Layer functions ----- //
-void box(Rect box, bool clearView);
-void borders(bool clearView);
+void box(Rect box);
+void borders();
 
 // ----- View functions ----- //
 void openingView();
@@ -222,6 +242,7 @@ void mainMenuView();
 void zzz(int milliseconds);                   // Cross platform sleep
 void resetScreen();           // cross platform clear-screen.
 
+void testing();
 
 
 
@@ -291,7 +312,7 @@ void loadingBar(Vector2 position, int length, int loadTime = 5000)
 		resetScreen();
 		w.setWord(position.x + i+10, position.y, "=");
 		w.coutWindow();
-		zzz(500);
+		zzz(50);
 	}
 	
 }
@@ -324,7 +345,6 @@ void loadingBar(int x, int y, int length, int loadTime = 5000)
 void openingView(){
 
 	Rect r = Rect(6, 4, 48, 11);
-
 	box(r);
 	resetScreen();
 
@@ -334,6 +354,7 @@ void openingView(){
 	w.setWord(r.center().x, 14, "Copyright 2016", true);
 	w.coutWindow();
 	loadingBar(16, 10, 20, 5000);
+
 	zzz(1000);
     mainMenuView();
 }
@@ -381,7 +402,6 @@ void mainMenuView(){
    //"                   |                              |                   \n");
    // w.setLine(7,
    //"                   *                              *                   \n");
-
 
     w.setWord(w.CENTER.x-5,  8, "[N]EW GAME");
     w.setWord(w.CENTER.x-5, 10, "[C]ONTINUE");
@@ -445,10 +465,38 @@ int main(){
 
 	openingView();
 	
+    testing(); 
 
     return 0;
 }
 
+void testing(){
+	w.clearWindow();//starting fresh here in testing
+
+    // This is meant to be a function with no other purpose than to pump
+    //  out dirty function calls. 
+
+    //Add design layers - These you could potentially use inside the view-functions aswell
+    borders();
+    box(Rect(10, 6, 40, 7));
+
+    zzz(1000);
+
+    borders();
+
+    resetScreen();    // Bumps old frame out of sight
+            
+
+    vector<string> text = { 
+                "My name is Jonas,", 
+                " and I'm carrying the wheel.",
+                "  Thanks for all you've shown us,",
+                "   This is how it feels... ! :)"};
+    w.setText(10, 3, text);                      
+    w.coutWindow();
+
+
+}
 
 
 
