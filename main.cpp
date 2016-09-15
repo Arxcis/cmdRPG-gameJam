@@ -11,7 +11,7 @@
 
 
 #include <iostream>
-#include <io.h>
+//#include <io.h>
 #include <fcntl.h>
 #include <string>
 #include <vector>
@@ -388,7 +388,9 @@ void travelView(string fromLocation, string toLocation, int length)
 //                   * Continue
 //                   * Exit
 void mainMenuView(){
+    
 
+    
     resetScreen();
     w.clearWindow();
 
@@ -465,7 +467,7 @@ int main(){
 
 	openingView();
 	
-    testing(); 
+    testing();
 
     return 0;
 }
@@ -474,7 +476,10 @@ void testing(){
 	w.clearWindow();//starting fresh here in testing
 
     // This is meant to be a function with no other purpose than to pump
-    //  out dirty function calls. 
+    //  out dirty function calls.
+    
+    loadingBar(16, 10, 20, 5000);
+    w.clearWindow();
 
     //Add design layers - These you could potentially use inside the view-functions aswell
     borders();
