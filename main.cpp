@@ -81,54 +81,30 @@ struct Window {
 
     //  --------- Struct attributes ----------- //
     //
-    // Description : Constant which works as a template, whenever we need to 
-    //                "clean" the window object.
-    //
-    const vector<string> windowEmpty = {
     
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "                                                                      \n",
-    "\n\n\n\n\n"
-    };
-
-
+    
     // Description : Constants to be used for specifying relative coordinates.
     //                Makes it really easy to change look of the game in one
     //                place. 
     //              
     const int WIDTH = 70;
     const int HEIGHT = 20;
-	const Vector2 CENTER =		Vector2( WIDTH / 2,HEIGHT / 2 );
-    const Vector2 UPPER_LEFT =	Vector2( 0, 0 );
+	const Vector2 CENTER      = Vector2( WIDTH / 2,HEIGHT / 2 );
+    const Vector2 UPPER_LEFT  =	Vector2( 0, 0 );
     const Vector2 UPPER_RIGHT =	Vector2( WIDTH, 0 );
-    const Vector2 LOWER_LEFT =	Vector2( 0, HEIGHT );
+    const Vector2 LOWER_LEFT  =	Vector2( 0, HEIGHT );
     const Vector2 LOWER_RIGHT = Vector2( WIDTH, HEIGHT );
-
-
+    
+    
     // Description : A vector which holds the state of the window object.
-    // A 
+    //
     // Arrays cannot be assigned to other arrays. So here we need to use
     //  a vector.
     //
-    vector<string> windowState = windowEmpty;
+    
+    string         emptyLine   = string (WIDTH, ' ');
+    vector<string> emptyWindow = vector<string> (HEIGHT, emptyLine);
+    vector<string> windowState = emptyWindow;
 
 
     // ---------------- Struct methods  --------------- // 
@@ -136,7 +112,7 @@ struct Window {
     // Description : Overwrites entire window object, with a blank template.
     //
     //
-    void clearWindow() {     windowState = windowEmpty;    }
+    void clearWindow() {     windowState = emptyWindow;    }
 
 
     void setWindow(string lines[20]) {
@@ -473,12 +449,13 @@ int main(){
 }
 
 void testing(){
+    
 	w.clearWindow();//starting fresh here in testing
 
     // This is meant to be a function with no other purpose than to pump
     //  out dirty function calls.
     
-    loadingBar(16, 10, 20, 5000);
+    loadingBar(16, 10, 30, 15000);
     w.clearWindow();
 
     //Add design layers - These you could potentially use inside the view-functions aswell
