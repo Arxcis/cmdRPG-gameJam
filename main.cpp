@@ -179,15 +179,18 @@ void loadingBar(Vector2 position, int length, int loadTime = 5000);
 void loadingBar(int x, int y, int length, int loadTime = 5000);
 
 // ----- View functions ----- //
-void openingView();
-void travelView(string fromLocation, string toLocation, int length);
-void mainMenuView();
+void opening();
+void mainMenu();
+void epicTravel();
+void baseTemplate(int switcher = 0);
+
+void travel(string fromLocation, string toLocation, int length);
 
 // ------ Utility functions ---- //
 void zzz(int milliseconds);                   // Cross platform sleep
-void resetScreen();           // cross platform clear-screen.
-
+void clearScreen();           // cross platform clear-screen.
 void testing();
+
 
 
 
@@ -251,9 +254,10 @@ void loadingBar(Vector2 position, int length, int loadTime)
 
     for (int i = 0; i < length; i++)
     {
-        resetScreen();
+        clearScreen();
         w.setWord(position.x + i+10, position.y, "=");
         w.coutWindow();
+        Window();
         zzz(50);
     }
     
@@ -290,9 +294,10 @@ struct View {
 
     void opening(){
 
-        resetScreen();
+        clearScreen();
         borders();
 
+ 
         vector<string> text = { "The               ",
                                 "  Wizard's        ",
                                 "  Holiday         ",
@@ -301,7 +306,7 @@ struct View {
         w.setText(w.CENTER.x-30, w.CENTER.y-3, text);
 
         w.coutWindow();
-        loadingBar(w.CENTER.x - 30, w.CENTER.y+8, 50, 10000); 
+        loadingBar(w.CENTER.x - 30, w.CENTER.y+8, 50, 500); 
 
         mainMenu();
     }
@@ -312,9 +317,9 @@ struct View {
     //                   * Exit
     void mainMenu(){
         
-        resetScreen();
-
+        clearScreen();
         w.clearWindow();
+
 
         w.setWord(w.CENTER.x-5,  w.CENTER.y - 2, "[N]EW GAME");
         w.setWord(w.CENTER.x-5,  w.CENTER.y    , "[C]ONTINUE");
@@ -326,38 +331,94 @@ struct View {
     "                           ==================================                            ");
         borders();
         w.coutWindow();
-        cout << string (w.CENTER.x, ' ');
-            cin >> globalKey;
-        cin.ignore();    cin.clear();
+        cout << string (w.CENTER.x, ' ');   cin >> globalKey;
+        
+        switch(toupper(globalKey)){
+
+            case 'N':
+                epicTravel();
+                break;
+            case 'C':
+                break;
+            case 'E':
+                break;
+                cout << "  Option not available yet";
+
+
+        }
+        std::cin.ignore();    std::cin.clear();
     }
-};
 
+    
+    // VIEW: epicTravel - Shows animation of travelling between York and Bergen.
+    //                      It is the first thing that happens in the game.
+    void epicTravel(){
 
+        clearScreen();
+        w.clearWindow();
+
+        vector<string> text = { "Our hero starts on his dangerous journey across the seas.",
+                                " Huge waves nearly destroys his boat, but luckily he makes it",
+                                "  all the way across the northern sea.",
+                                "    He arrives in Bergen at 15:00 o'clock. " };
+        w.setText(w.CENTER.x-30, w.CENTER.y-5, text);
+
+        w.coutWindow();
+        travel("Jorvik", "Bergen", 20);
+
+        zzz(2000);
+        // bergen();
+    }
+
+    /// VIEW: bergen - Should work as main hub for the city.
+    void baseTemplate(int switcher){ 
+
+        clearScreen();
+        w.clearWindow();
+                // Switch between the two ways of bordering
+        switch(switcher){
+            case 0: 
+                box(Rect(0 , 0,                (w.WIDTH * 1/3), w.CENTER.y));
+                box(Rect(0 , (w.HEIGHT * 2/4), (w.WIDTH * 1/3), w.CENTER.y));
+                w.setWord(w.CENTER.x, w.CENTER.y, "Base template 0");
+                break;
+            case 1:
+                box(Rect(w.WIDTH * 0 , 0, (w.WIDTH * 1/3), w.HEIGHT));
+                w.setWord(w.CENTER.x, w.CENTER.y, "Base template 1");
+                break;
+        }
+        box(Rect(w.WIDTH * 1/3 , 0, (w.WIDTH * 2/3), w.HEIGHT  ));
+
+        w.coutWindow();
+    }
 
     // VIEW: travelView - Shows animation of travelling between two cities.
     //       @param - string fromLocation - name of starting location
     //       @param - string toLocation   - name of destination
     //       @param - int    length       - animation time in seconds. 
-    void travel(string fromLocation, string toLocation, const int length)
+    void travel(string fromLocation, string toLocation, const int length) 
     {
         int halfWay = length / 2; //this is unprecise
 
-        resetScreen();
+        clearScreen();
         w.setWord(w.CENTER.x - halfWay - fromLocation.length(), w.CENTER.y, fromLocation);
         w.coutWindow();
+        Window();
         for (int i = 0; i < length; i++)
         {
-            resetScreen();
+            clearScreen();
             w.setWord(w.CENTER.x - halfWay + i, w.CENTER.y, "-");
             w.coutWindow();
+            Window();
             zzz(500);
         }
         //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
-        resetScreen();
+        clearScreen();
         w.setWord(w.CENTER.x - halfWay + length, w.CENTER.y, ">" + toLocation);
         w.coutWindow();
+        Window();
     }
-
+};
 
 //                                                                           //
 // ---------------------------- UTILITY FUNCITONS ---------------------------//
@@ -375,8 +436,9 @@ void zzz(int milliseconds)        // cross-platform sleep function
     #endif // win32
 }
 
-void resetScreen(){
+void clearScreen(){
     globalKey = ' ';    // Resets the global key, so it won't have side-
+           
                         // effects across views.
 #ifdef WIN32
     system("cls");
@@ -403,7 +465,14 @@ void testing(){
 
     View view;
 
-    view.opening();
+    view.baseTemplate(0);
+    zzz(2000);
+    view.baseTemplate(1);
+    zzz(2000);
+    view.baseTemplate(0);
+    zzz(2000);
+    view.baseTemplate(1);
+    //view.opening();
     //view.travel("Bergen", "Oslo", 15);
 }
 
