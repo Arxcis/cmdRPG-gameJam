@@ -290,8 +290,6 @@ struct View {
 
     void opening(){
 
-        std::cout << "\nResize screen!\n";
-        zzz(3000);
         resetScreen();
         borders();
 
@@ -303,11 +301,37 @@ struct View {
         w.setText(w.CENTER.x-30, w.CENTER.y-3, text);
 
         w.coutWindow();
-        loadingBar(w.CENTER.x - 30, w.CENTER.y+8, 50, 10000);
+        loadingBar(w.CENTER.x - 30, w.CENTER.y+8, 50, 10000); 
 
-        
-
+        mainMenu();
     }
+
+    // VIEW: mainMenu - Presents important menu options for the player, such as:
+    //                   * New game
+    //                   * Continue
+    //                   * Exit
+    void mainMenu(){
+        
+        resetScreen();
+
+        w.clearWindow();
+
+        w.setWord(w.CENTER.x-5,  w.CENTER.y - 2, "[N]EW GAME");
+        w.setWord(w.CENTER.x-5,  w.CENTER.y    , "[C]ONTINUE");
+        w.setWord(w.CENTER.x-5,  w.CENTER.y + 2, "[E]XIT"    );
+
+        w.setLine(w.CENTER.y + 4, 
+    "                           [N]+enter | [C]+enter | [E]+Enter                             ");
+        w.setLine(w.CENTER.y + 5, 
+    "                           ==================================                            ");
+        borders();
+        w.coutWindow();
+        cout << string (w.CENTER.x, ' ');
+            cin >> globalKey;
+        cin.ignore();    cin.clear();
+    }
+};
+
 
 
     // VIEW: travelView - Shows animation of travelling between two cities.
@@ -334,31 +358,6 @@ struct View {
         w.coutWindow();
     }
 
-    // VIEW: mainMenu - Presents important menu options for the player, such as:
-    //                   * New game
-    //                   * Continue
-    //                   * Exit
-    void mainMenu(){
-        
-        resetScreen();
-        w.clearWindow();
-
-        box(Rect(10, 2, w.WIDTH * (7/10), w.HEIGHT * (7/10))); 
-
-        w.setWord(w.CENTER.x-5,  w.CENTER.y - 2, "[N]EW GAME");
-        w.setWord(w.CENTER.x-5,  w.CENTER.y    , "[C]ONTINUE");
-        w.setWord(w.CENTER.x-5,  w.CENTER.y + 2, "[E]XIT"    );
-
-        w.setLine(w.CENTER.y + 4, 
-    "                            [N]+enter | [C]+enter | [E]+Enter                            \n");
-        w.setLine(w.CENTER.y + 5, 
-    "                            ==================================                           \n");
-        w.coutWindow();
-        cout << "                                ";
-            cin >> globalKey;
-        cin.ignore();    cin.clear();
-    }
-};
 
 //                                                                           //
 // ---------------------------- UTILITY FUNCITONS ---------------------------//
