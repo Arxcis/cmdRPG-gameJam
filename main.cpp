@@ -11,7 +11,6 @@
 
 
 #include <iostream>
-//#include <io.h>
 #include <fcntl.h>
 #include <string>
 #include <vector>
@@ -33,41 +32,40 @@ using namespace std;
 //
 struct Vector2
 {
-	int x = 0, y = 0;
-	Vector2(int xValue = 0, int yValue = 0)
-	{
-		x = xValue;
-		y = yValue;
-	}
+    int x = 0, y = 0;
+    Vector2(int xValue = 0, int yValue = 0)
+    {
+        x = xValue;
+        y = yValue;
+    }
 };
+            // struct Rect {}
+            // Description :  This struct is used to create rectangles
+            //                with a defined position and size
+            // Why is this so messy =??=?????
+struct Rect {
+    
+    Vector2 position;                       //position of the rectangle
+    const int* x = &position.x;
+    const int* y = &position.y;
+    Vector2 size;                           //size of rectangle
+    const int* width = &size.x;
+    const int* height = &size.y;
 
-// struct Rect {}
-// Description :  This struct is used to create rectangles
-//				  with a defined position and size
-struct Rect
-{
-	Vector2 position;	//position of the rectangle
-	const int* x = &position.x;
-	const int* y = &position.y;
-	Vector2 size;		//size of rectangle
-	const int* width = &size.x;
-	const int* height = &size.y;
+    Rect(int rectX, int rectY, int rectWidth, int rectHeight){
 
-	Rect(int rectX, int rectY, int rectWidth, int rectHeight)
-	{
-		position = Vector2(rectX, rectY);
-		size = Vector2(rectWidth, rectHeight);
-	}
+        position = Vector2(rectX, rectY);
+        size = Vector2(rectWidth, rectHeight);
+    }
 
-	int xMax() { return *x + *width - 1; }
-	int yMax() { return *y + *height - 1; }
+    int xMax() { return *x + *width - 1; }
+    int yMax() { return *y + *height - 1; }
 
-	Vector2 center() { return Vector2(*x + *width / 2, *y + *height / 2); }
-	Vector2 upperLeft() { return Vector2(*x, *y); }
-	Vector2 upperRight() { return Vector2(*x + *width - 1, *y); }
-	Vector2 lowerLeft() { return Vector2(*x, *y + *height - 1); }
-	Vector2 lowerRight() { return Vector2(*x + *width - 1, *y + *height - 1); }
-
+    Vector2 center()     { return Vector2(*x + *width / 2, *y + *height / 2); }
+    Vector2 upperLeft()  { return Vector2(*x, *y);                            }
+    Vector2 upperRight() { return Vector2(*x + *width - 1, *y);               }
+    Vector2 lowerLeft()  { return Vector2(*x, *y + *height - 1);              }
+    Vector2 lowerRight() { return Vector2(*x + *width - 1, *y + *height - 1); }
 };
 
 
@@ -79,89 +77,57 @@ struct Rect
 //
 struct Window {
 
-    //  --------- Struct attributes ----------- //
-    //
+    const int WIDTH  = 90;       // Constants to be used for specifying relative coordinates.
+    const int HEIGHT = 30;
+    const Vector2 CENTER   = Vector2( WIDTH / 2, HEIGHT / 2 );
+    const Vector2 U_LEFT   = Vector2( 0, 0 );
+    const Vector2 U_RIGHT  = Vector2( WIDTH, 0 );
+    const Vector2 L_LEFT   = Vector2( 0, HEIGHT );
+    const Vector2 L_RIGHT  = Vector2( WIDTH, HEIGHT );
     
-    
-    // Description : Constants to be used for specifying relative coordinates.
-    //                Makes it really easy to change look of the game in one
-    //                place. 
-    //              
-    const int WIDTH = 70;
-    const int HEIGHT = 20;
-	const Vector2 CENTER      = Vector2( WIDTH / 2,HEIGHT / 2 );
-    const Vector2 UPPER_LEFT  =	Vector2( 0, 0 );
-    const Vector2 UPPER_RIGHT =	Vector2( WIDTH, 0 );
-    const Vector2 LOWER_LEFT  =	Vector2( 0, HEIGHT );
-    const Vector2 LOWER_RIGHT = Vector2( WIDTH, HEIGHT );
-    
-    
-    // Description : A vector which holds the state of the window object.
-    //
-    // Arrays cannot be assigned to other arrays. So here we need to use
-    //  a vector.
-    //
-    
-    string         emptyLine   = string (WIDTH, ' ');
-    vector<string> emptyWindow = vector<string> (HEIGHT, emptyLine);
-    vector<string> windowState = emptyWindow;
+    const string         ZERO_LINE   = string         (WIDTH , ' '      );
+    const vector<string> ZERO_WINDOW = vector<string> (HEIGHT, ZERO_LINE);
+
+    vector<string> windowState = ZERO_WINDOW;  // Initialize state of window object
 
 
-    // ---------------- Struct methods  --------------- // 
-    //
-    // Description : Overwrites entire window object, with a blank template.
-    //
-    //
-    void clearWindow() {     windowState = emptyWindow;    }
+    //  ------------------------------ Window methods ------------------------- // 
+    //  void clearWindow()
+    //  void setWindow()
+    //  void setline()
+    //  void setWord()
+    //  void setText()
+    //  void coutWindow()
+    //  ----------------------------------------------------------------------- // 
 
+        // Description : Overwrites entire window object, with a blank template.
+    void clearWindow() {     windowState = ZERO_WINDOW;    }
 
-    void setWindow(string lines[20]) {
-        
-        for (int row = 0; row < 20; row++)
-        {
-            windowState[row] = lines[row] + "\n";
-        }
-        
-    }
+        // Description : Overwrites entire window object with a custom template.
+    void setWindow(vector <string> newState) {     windowState = newState;   }
 
-    void howAboutWritingSetWindowLikeThis(vector<string> stringvec20Lines){
+        // Description : Replaces an entire row of the window object, with a new.
+    void setLine(int row, string line) {    windowState[row] = line + "\n";     }
 
-        windowState = stringvec20Lines;
+        // Description : Places a string at a specified location within the window.
+        //               If a str overflows the window, it gets cut off.
+        //
+        // @param : int column - a number between 0-69, starting pos. of the word.
+        // @param : int row - a number between 0-19, specifies which row to change
+        // @param : string str - a word of any lenght to be inserted at position.
+        // @param : bool centered - makes the word shift over so, 'column' will be 
+        //            in the center of the word
+        // @return: void
 
-    }
-
-    // Description : Replaces an entire row of the window object, with a new.
-    //
-    // @param : int row - a number between 0-19, specifies which row to change
-    // @param : string line - inputs a string of length 71, the entire row.
-    // @return: void
-    //
-    //
-    void setLine(int row, string line) {
-
-        windowState[row] = line + "\n";
-    }
-
-
-    // Description : Places a string at a specified location within the window.
-    //               If a str overflows the window, it gets cut off.
-    //
-	// @param : int column - a number between 0-69, starting pos. of the word.
-    // @param : int row - a number between 0-19, specifies which row to change
-    // @param : string str - a word of any lenght to be inserted at position.
-	// @param : bool centered - makes the word shift over so 'column' will be in the center of the word
-    // @return: void
-    //
-    //
     void setWord(int column, int row, string str, bool centered = false){
-		if (centered)
-		{
-			column -= str.length() / 2;
-		}
+        if (centered)
+        {
+            column -= str.length() / 2;
+        }
         for (int i = column, j= 0; i < (column + str.length()); i++, j++){
 
             
-            if ( i < 70) {          // Makes sure that the end of line is not
+            if ( i < WIDTH) {          // Makes sure that the end of line is not
                                      //  overwritten.
                 windowState[row][i] = str[j];
             }
@@ -171,9 +137,9 @@ struct Window {
     void setText(int column, int row, vector<string> stringList){
 
         string str;
-        unsigned long length = stringList.size(); // the return type is 'ulong'
+        unsigned long length = stringList.size(); // the return type of  is 'ulong'
 
-        for (int i = row, j = 0; j < length && i <= 19; i++, j++) {
+        for (int i = row, j = 0; j < length && i < HEIGHT; i++, j++) {
             str = stringList[j];
 
             for (int k = column, l = 0; k < (column + str.length()); k++, l++){
@@ -189,11 +155,12 @@ struct Window {
     //
     void coutWindow()  {
 
-        for (int i=0; i < 20; i++){
-			std::cout << windowState[i];
+        for (int i=0; i < HEIGHT; i++){
+            std::cout << windowState[i] << '\n';
         }
     }
 }; 
+
 
 // ------------------------------ GLOBALS -----------------------------------//
 
@@ -208,6 +175,8 @@ Window w;
 // ----- GUI Layer functions ----- //
 void box(Rect box);
 void borders();
+void loadingBar(Vector2 position, int length, int loadTime = 5000);
+void loadingBar(int x, int y, int length, int loadTime = 5000);
 
 // ----- View functions ----- //
 void openingView();
@@ -223,22 +192,19 @@ void testing();
 
 
 
-
-
-
-//// ------------------------ FUNCTION DEFINITIONS  ---------------------- ////
-
+//// ------------------------ FUNCTION DEFINITIONS  ------------------------- ////
 
 // ------------------------------ GUI LAYER FUNCITONS ------------------------------//
 //   Comment:
 //    The following helperfunctions generate parts of a view.
 //     Most GUI layer function:
-//       1.  Adds parts to the buffer (string vector) without actually printing it. (that's the view-functions job).
-//		 2.  Are used only by the view-functions.
-//		 3a. Does not use zzz(...) as that can cause pauses in the view-function, causing half-printed views.
-//		 3b. can use zzz(...) as long as they also handle their own printing.
+//       1.  Adds parts to the buffer (string vector) without actually printing it. 
+//             (that's the view-functions job).
+//       2.  Are used only by the view-functions.
+//       3a. Does not use zzz(...) as that can cause pauses in the view-function, causing half-printed views.
+//       3b. can use zzz(...) as long as they also handle their own printing.
 //
-//	   To make the game appear consistent across all views we have to     
+//     To make the game appear consistent across all views we have to     
 //     standardize the width and height of each view.
 //     The window object should make sure that width and high are consistent
 //     across views. 
@@ -250,52 +216,54 @@ void testing();
 //       @param - screenRectangle - a rectangle made from coordinates in the console view (within 70x20)
 void box(Rect screenRectangle)
 {
-	string horizLine = "+";
-	for (int i = 1; i < *screenRectangle.width - 1; i++)
-	{
-		horizLine += "=";
-	}
-	horizLine += "+";
+    string horizLine = "+";
+    for (int i = 1; i < *screenRectangle.width - 1; i++)
+    {
+        horizLine += "=";
+    }
+    horizLine += "+";
 
-	w.setWord(*screenRectangle.x, *screenRectangle.y, horizLine);
-	for (int i = 1; i < *screenRectangle.height; i++)
-	{
-		w.setWord(*screenRectangle.x, *screenRectangle.y + i, "[");
-		w.setWord(screenRectangle.xMax(), *screenRectangle.y + i, "]");
-	}
-	w.setWord(*screenRectangle.x, screenRectangle.yMax(), horizLine);
+    w.setWord(*screenRectangle.x, *screenRectangle.y, horizLine);
+    for (int i = 1; i < *screenRectangle.height; i++)
+    {
+        w.setWord(*screenRectangle.x, *screenRectangle.y + i, "[");
+        w.setWord(screenRectangle.xMax(), *screenRectangle.y + i, "]");
+    }
+    w.setWord(*screenRectangle.x, screenRectangle.yMax(), horizLine);
 }
 
 
 // GUILAYER: borders - generates borders for your window.
 void borders()
 {
-	box(Rect(0, 0, 70, 20));//BOX the whole screen
+    box(Rect(0, 0, w.WIDTH, w.HEIGHT));//BOX the whole screen
 }
 
 // GUILAYER: loading bar - Displays a loading bar with a load time.
 //       @param - position - on which coordinates should the starting position be
-//		 @param - length - how many ticks does the loading bar need to get full
-//		 @param - loadTime - how long does each tick take
-void loadingBar(Vector2 position, int length, int loadTime = 5000)
+//       @param - length - how many ticks does the loading bar need to get full
+//       @param - loadTime - how long does each tick take
+void loadingBar(Vector2 position, int length, int loadTime)
 {
-	
-	w.setWord(position.x, position.y, "LOADING: [");
-	w.setWord(position.x + length + 10, position.y, "]");
+    
+    w.setWord(position.x, position.y, "LOADING: [");
+    w.setWord(position.x + length + 10, position.y, "]");
 
-	for (int i = 0; i < length; i++)
-	{
-		resetScreen();
-		w.setWord(position.x + i+10, position.y, "=");
-		w.coutWindow();
-		zzz(50);
-	}
-	
+    for (int i = 0; i < length; i++)
+    {
+        resetScreen();
+        w.setWord(position.x + i+10, position.y, "=");
+        w.coutWindow();
+        zzz(50);
+    }
+    
 }
-void loadingBar(int x, int y, int length, int loadTime = 5000)
+
+void loadingBar(int x, int y, int length, int loadTime)
 {
-	loadingBar(Vector2(x, y), length, loadTime);
+    loadingBar(Vector2(x, y), length, loadTime);
 }
+
 
 // ----------------------------- VIEW FUNCITONS -----------------------------//
 //   Comment:
@@ -318,91 +286,79 @@ void loadingBar(int x, int y, int length, int loadTime = 5000)
 // VIEW: openingView - The first view that meets the player after loading 
 //                      the game.
 //
-void openingView(){
+struct View {
 
-	Rect r = Rect(6, 4, 48, 11);
-	box(r);
-	resetScreen();
+    void opening(){
 
-	w.setWord(12, 7, "The");
-	w.setWord(14, 8, "Wizard's");
-	w.setWord(16, 9, "Holiday");
-	w.setWord(r.center().x, 14, "Copyright 2016", true);
-	w.coutWindow();
-	loadingBar(16, 10, 20, 5000);
+        std::cout << "\nResize screen!\n";
+        zzz(3000);
+        resetScreen();
+        borders();
 
-	zzz(1000);
-    mainMenuView();
-}
+        vector<string> text = { "The               ",
+                                "  Wizard's        ",
+                                "  Holiday         ",
+                                "    Copyright 2016" };
 
+        w.setText(w.CENTER.x-30, w.CENTER.y-3, text);
 
-// VIEW: travelView - Shows animation of travelling between two cities.
-//       @param - string fromLocation - name of starting location
-//       @param - string toLocation   - name of destination
-//       @param - int    length       - animation time in seconds. 
-void travelView(string fromLocation, string toLocation, int length)
-{
-    resetScreen();
-    int halfWay = length / 2; //this is unprecise
-    w.setWord(w.CENTER.x - fromLocation.length() - halfWay, w.CENTER.y, fromLocation);
-	w.coutWindow();
-    for (int i = 0; i < length; i++)
-    {
-        w.setWord(w.CENTER.x - halfWay + i, w.CENTER.y, "-");
-		resetScreen();
-		w.coutWindow();
-        zzz(1000);
+        w.coutWindow();
+        loadingBar(w.CENTER.x - 30, w.CENTER.y+8, 50, 10000);
+
+        
+
     }
-    //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
-    w.setWord(w.CENTER.x - halfWay + length, w.CENTER.y, ">" + toLocation);
-	resetScreen();
-    w.coutWindow();
-}
-
-// VIEW: mainMenu - Presents important menu options for the player, such as:
-//                   * New game
-//                   * Continue
-//                   * Exit
-void mainMenuView(){
-    
-
-    
-    resetScreen();
-    w.clearWindow();
-
-	box(Rect(18, 4, 34, 12)); //testing box to compare to manually made boxes
-
-   // w.setLine(4,
-   //"                   ================================                   \n");
-   // w.setLine(5,
-   //"                   |                              |                   \n");
-   // w.setLine(6,
-   //"                   |                              |                   \n");
-   // w.setLine(7,
-   //"                   *                              *                   \n");
-
-    w.setWord(w.CENTER.x-5,  8, "[N]EW GAME");
-    w.setWord(w.CENTER.x-5, 10, "[C]ONTINUE");
-    w.setWord(w.CENTER.x-5, 12, "[E]XIT"    ); //with rects and boxes, the center could easily be relative to the rect as well
 
 
-   // w.setLine(14,
-   //"                  *                                *                  \n");
-   // w.setLine(15,
-   //"                  |                                |                  \n");
-   // w.setLine(16,
-   //"                  ==================================                  \n");
-    w.setLine(17,
-   "                  [N]+enter | [C]+enter | [E]+Enter                   \n");
-    w.setLine(18,
-   "                  ==================================                  \n");
-    w.coutWindow();
-    cout << "                                ";
-    
-    cin >> globalKey;
-    cin.ignore();    cin.clear();
-}
+    // VIEW: travelView - Shows animation of travelling between two cities.
+    //       @param - string fromLocation - name of starting location
+    //       @param - string toLocation   - name of destination
+    //       @param - int    length       - animation time in seconds. 
+    void travel(string fromLocation, string toLocation, const int length)
+    {
+        int halfWay = length / 2; //this is unprecise
 
+        resetScreen();
+        w.setWord(w.CENTER.x - halfWay - fromLocation.length(), w.CENTER.y, fromLocation);
+        w.coutWindow();
+        for (int i = 0; i < length; i++)
+        {
+            resetScreen();
+            w.setWord(w.CENTER.x - halfWay + i, w.CENTER.y, "-");
+            w.coutWindow();
+            zzz(500);
+        }
+        //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
+        resetScreen();
+        w.setWord(w.CENTER.x - halfWay + length, w.CENTER.y, ">" + toLocation);
+        w.coutWindow();
+    }
+
+    // VIEW: mainMenu - Presents important menu options for the player, such as:
+    //                   * New game
+    //                   * Continue
+    //                   * Exit
+    void mainMenu(){
+        
+        resetScreen();
+        w.clearWindow();
+
+        box(Rect(10, 2, w.WIDTH * (7/10), w.HEIGHT * (7/10))); 
+
+        w.setWord(w.CENTER.x-5,  w.CENTER.y - 2, "[N]EW GAME");
+        w.setWord(w.CENTER.x-5,  w.CENTER.y    , "[C]ONTINUE");
+        w.setWord(w.CENTER.x-5,  w.CENTER.y + 2, "[E]XIT"    );
+
+        w.setLine(w.CENTER.y + 4, 
+    "                            [N]+enter | [C]+enter | [E]+Enter                            \n");
+        w.setLine(w.CENTER.y + 5, 
+    "                            ==================================                           \n");
+        w.coutWindow();
+        cout << "                                ";
+            cin >> globalKey;
+        cin.ignore();    cin.clear();
+    }
+};
 
 //                                                                           //
 // ---------------------------- UTILITY FUNCITONS ---------------------------//
@@ -421,13 +377,12 @@ void zzz(int milliseconds)        // cross-platform sleep function
 }
 
 void resetScreen(){
-
+    globalKey = ' ';    // Resets the global key, so it won't have side-
+                        // effects across views.
 #ifdef WIN32
-	system("cls");
-#else
-    globalKey = ' ';         // Resets the global key, so it won't have side-
-                            // effects across views.
+    system("cls");
 
+#else     
     for (int i=0; i < 30; i++) {  // Prints 30 \n - endline characters.
         cout << '\n';             //  effectively wipes the screen clean.
     }
@@ -437,47 +392,20 @@ void resetScreen(){
 //// ------------------------------ MAIN ----------------------------------////
 
 
+
 int main(){
-	//Add design layers - These you could potentially use inside the view-functions aswell
-	borders();
 
-	openingView();
-	
     testing();
-
     return 0;
 }
 
+
 void testing(){
-    
-	w.clearWindow();//starting fresh here in testing
 
-    // This is meant to be a function with no other purpose than to pump
-    //  out dirty function calls.
-    
-    loadingBar(16, 10, 30, 15000);
-    w.clearWindow();
+    View view;
 
-    //Add design layers - These you could potentially use inside the view-functions aswell
-    borders();
-    box(Rect(10, 6, 40, 7));
-
-    zzz(1000);
-
-    borders();
-
-    resetScreen();    // Bumps old frame out of sight
-            
-
-    vector<string> text = { 
-                "My name is Jonas,", 
-                " and I'm carrying the wheel.",
-                "  Thanks for all you've shown us,",
-                "   This is how it feels... ! :)"};
-    w.setText(10, 3, text);                      
-    w.coutWindow();
-
-
+    view.opening();
+    //view.travel("Bergen", "Oslo", 15);
 }
 
 
