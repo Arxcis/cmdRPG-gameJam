@@ -12,6 +12,8 @@
 
 // ------------ STANDARD LIB INCLUDES ------------ //
 
+#define MAIN           // main.cpp
+
 #include <iostream>
 #include <fcntl.h>
 #include <string>
@@ -24,10 +26,9 @@
 #include <unistd.h>
 #endif                  // Used to get sleep function cross platform
 
-            // Local includes
-#include "globals.h"
-
-#include "graphics.h"
+// ------------ LOCAL LIB INCLUDES ------------ //
+#include "global.h"
+#include "shape.h"
 #include "window.h"
 #include "view.h"
 

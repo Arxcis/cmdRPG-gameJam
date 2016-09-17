@@ -1,9 +1,9 @@
-#ifndef WINDOW_H
+#ifndef WINDOW_H      // if not defined
 #define WINDOW_H
 
 #include <string>
 #include <vector>
-#include "graphics.h"
+#include "shape.h"
 
 using namespace std; 
 
