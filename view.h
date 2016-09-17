@@ -95,6 +95,7 @@ struct View {
 
         mainMenu();
     }
+    
     // VIEW: mainMenu - Presents important menu options for the player, such as:
     //                   * New game
     //                   * Continue
