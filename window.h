@@ -5,8 +5,7 @@
 #include <vector>
 #include "graphics.h"
 
-using namespace std; 
-
+using namespace std;
 // ------------------------- STRUCT WINDOW ---------------------------------
 // Description : This struct is used to create the window object. This object
 //                is very important to the game. The window object holds
@@ -17,16 +16,12 @@ struct Window {
 
     const int WIDTH  = 90;       // Constants to be used for specifying relative coordinates.
     const int HEIGHT = 30;
-    const Vector2 CENTER   = Vector2( WIDTH / 2, HEIGHT / 2 );
-    const Vector2 U_LEFT   = Vector2( 0, 0 );
-    const Vector2 U_RIGHT  = Vector2( WIDTH, 0 );
-    const Vector2 L_LEFT   = Vector2( 0, HEIGHT );
-    const Vector2 L_RIGHT  = Vector2( WIDTH, HEIGHT );
+	const Rect bounds = Rect(0, 0, WIDTH, HEIGHT);
     
-    const string         ZERO_LINE   = string         (WIDTH , ' '      );
-    const vector<string> ZERO_WINDOW = vector<string> (HEIGHT, ZERO_LINE);
+	const string         EMPTY_LINE = string(WIDTH, ' ');
+    const vector<string> EMPTY_WINDOW = vector<string>(HEIGHT, EMPTY_LINE);
 
-    vector<string> windowState = ZERO_WINDOW;  // Initialize state of window object
+    vector<string> windowState = EMPTY_WINDOW;  // Initialize state of window object
 
 
     //  ------------------------------ Window methods ------------------------- // 
@@ -39,7 +34,7 @@ struct Window {
     //  ----------------------------------------------------------------------- // 
 
         // Description : Overwrites entire window object, with a blank template.
-    void clearWindow() {     windowState = ZERO_WINDOW;    }
+    void clearWindow() {     windowState = EMPTY_WINDOW;    }
 
         // Description : Overwrites entire window object with a custom template.
     void setWindow(vector <string> newState) {     windowState = newState;   }

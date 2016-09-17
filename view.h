@@ -62,13 +62,13 @@ struct View {
                 // Switch between the two ways of bordering
         switch(switcher){
             case 0: 
-                box(Rect(0 , 0,                (w.WIDTH * 1/3), w.CENTER.y));
-                box(Rect(0 , (w.HEIGHT * 2/4), (w.WIDTH * 1/3), w.CENTER.y));
-                w.setWord(w.CENTER.x, w.CENTER.y, "Base template 0");
+                box(Rect(0 , 0,                (w.WIDTH * 1/3), w.bounds.center.y));
+                box(Rect(0 , (w.HEIGHT * 2/4), (w.WIDTH * 1/3), w.bounds.center.y));
+                w.setWord(w.bounds.center.x, w.bounds.center.y, "Base template 0");
                 break;
             case 1:
                 box(Rect(w.WIDTH * 0 , 0, (w.WIDTH * 1/3), w.HEIGHT));
-                w.setWord(w.CENTER.x, w.CENTER.y, "Base template 1");
+                w.setWord(w.bounds.center.x, w.bounds.center.y, "Base template 1");
                 break;
         }
         box(Rect(w.WIDTH * 1/3 , 0, (w.WIDTH * 2/3), w.HEIGHT  ));
@@ -88,10 +88,10 @@ struct View {
                                 "  Holiday         ",
                                 "    Copyright 2016" };
 
-        w.setText(w.CENTER.x-30, w.CENTER.y-3, text);
+        w.setText(w.bounds.center.x-30, w.bounds.center.y-3, text);
 
         w.coutWindow();
-        loadingBar(w.CENTER.x - 30, w.CENTER.y+8, 50, 500); 
+        loadingBar(w.bounds.center.x - 30, w.bounds.center.y+8, 50, 500); 
 
         mainMenu();
     }
@@ -106,17 +106,17 @@ struct View {
         w.clearWindow();
 
 
-        w.setWord(w.CENTER.x-5,  w.CENTER.y - 2, "[N]EW GAME");
-        w.setWord(w.CENTER.x-5,  w.CENTER.y    , "[C]ONTINUE");
-        w.setWord(w.CENTER.x-5,  w.CENTER.y + 2, "[E]XIT"    );
+        w.setWord(w.bounds.center.x-5,  w.bounds.center.y - 2, "[N]EW GAME");
+        w.setWord(w.bounds.center.x-5,  w.bounds.center.y    , "[C]ONTINUE");
+        w.setWord(w.bounds.center.x-5,  w.bounds.center.y + 2, "[E]XIT"    );
 
-        w.setLine(w.CENTER.y + 4, 
+        w.setLine(w.bounds.center.y + 4, 
     "                           [N]+enter | [C]+enter | [E]+Enter                             ");
-        w.setLine(w.CENTER.y + 5, 
+        w.setLine(w.bounds.center.y + 5, 
     "                           ==================================                            ");
         borders();
         w.coutWindow();
-        cout << string (w.CENTER.x, ' ');   cin >> globalKey;
+        cout << string (w.bounds.center.x, ' ');   cin >> globalKey;
         
         switch(toupper(globalKey)){
 
@@ -146,7 +146,7 @@ struct View {
                                 " Huge waves nearly destroys his boat, but luckily he makes it",
                                 "  all the way across the northern sea.",
                                 "    He arrives in Bergen at 15:00 o'clock. " };
-        w.setText(w.CENTER.x-30, w.CENTER.y-5, text);
+        w.setText(w.bounds.center.x-30, w.bounds.center.y-5, text);
 
         w.coutWindow();
         travel("Jorvik", "Bergen", 20);
@@ -164,19 +164,19 @@ struct View {
         int halfWay = length / 2; //this is unprecise
 
         clearScreen();
-        w.setWord(w.CENTER.x - halfWay - fromLocation.length(), w.CENTER.y, fromLocation);
+        w.setWord(w.bounds.center.x - halfWay - fromLocation.length(), w.bounds.center.y, fromLocation);
         w.coutWindow();
 
         for (int i = 0; i < length; i++)
         {
             clearScreen();
-            w.setWord(w.CENTER.x - halfWay + i, w.CENTER.y, "-");
+            w.setWord(w.bounds.center.x - halfWay + i, w.bounds.center.y, "-");
             w.coutWindow();
             zzz(500);
         }
         //as 'halfWay' is unprecise we add length to the subtraction instead of just adding halfWay
         clearScreen();
-        w.setWord(w.CENTER.x - halfWay + length, w.CENTER.y, ">" + toLocation);
+        w.setWord(w.bounds.center.x - halfWay + length, w.bounds.center.y, ">" + toLocation);
         w.coutWindow();
 
     }
@@ -202,32 +202,32 @@ struct View {
 //
 
 // GUILAYER: borders - generates borders for your window.
-//       @param - screenRectangle - a rectangle made from coordinates in the console 
+//       @param - screenRect - a rectangle made from coordinates in the console 
 //                 view (within 70x20)
 
-void box(Rect screenRectangle)
+void box(Rect screenRect)
 {
     string horizLine = "+";
-    for (int i = 1; i < *screenRectangle.width - 1; i++)
+    for (int i = 1; i < screenRect.width - 1; i++)
     {
         horizLine += "=";
     }
     horizLine += "+";
 
-    w.setWord(*screenRectangle.x, *screenRectangle.y, horizLine);
-    for (int i = 1; i < *screenRectangle.height; i++)
+    w.setWord(screenRect.x, screenRect.y, horizLine);
+    for (int i = 1; i < screenRect.height; i++)
     {
-        w.setWord(*screenRectangle.x, *screenRectangle.y + i, "[");
-        w.setWord(screenRectangle.xMax(), *screenRectangle.y + i, "]");
+        w.setWord(screenRect.x, screenRect.y + i, "[");
+        w.setWord(screenRect.xMax, screenRect.y + i, "]");
     }
-    w.setWord(*screenRectangle.x, screenRectangle.yMax(), horizLine);
+    w.setWord(screenRect.x, screenRect.yMax, horizLine);
 }
 
 
 // GUILAYER: borders - generates borders for your window.
 void borders()
 {
-    box(Rect(0, 0, w.WIDTH, w.HEIGHT));//BOX the whole screen
+    box(w.bounds);//BOX the whole screen
 }
 
 // GUILAYER: loading bar - Displays a loading bar with a load time.

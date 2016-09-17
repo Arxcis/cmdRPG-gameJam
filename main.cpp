@@ -18,7 +18,7 @@
 #include <vector>
 #include <cmath>
 
-#ifdef win32                    // Used to get sleep function cross platform
+#ifdef WIN32                    // Used to get sleep function cross platform
 #include <windows.h>
 #else
 #include <unistd.h>
@@ -36,7 +36,6 @@ using namespace std;
 View view;
 
 void testing(){
-
 
     view.baseTemplate(0);
     zzz(2000);
