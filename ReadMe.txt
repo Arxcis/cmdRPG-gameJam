@@ -1,3 +1,8 @@
+
+The RULES have changed. Multifile IS NOW ALLOWED
+
+
+
 ========================================================================
     CONSOLE APPLICATION : cmdRPG-gameJam Project Overview
 ========================================================================
