@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "window.h"
-#include "globals.h"
+#include "global.h"
 
 using namespace std; 
 

@@ -1,5 +1,5 @@
-#ifndef WINDOW_H      // if not defined
-#define WINDOW_H
+#ifndef WINDOW_H      //   if not defined
+#define WINDOW_H      // define name of file
 
 #include <string>
 #include <vector>

@@ -20,7 +20,7 @@
 #include <vector>
 #include <cmath>
 
-#ifdef win32                    // Used to get sleep function cross platform
+#ifdef WIN32                    // Used to get sleep function cross platform
 #include <windows.h>
 #else
 #include <unistd.h>
@@ -31,6 +31,9 @@
 #include "shape.h"
 #include "window.h"
 #include "view.h"
+#include "input.h"
+
+
 
 using namespace std; 
 
