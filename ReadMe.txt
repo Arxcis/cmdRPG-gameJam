@@ -1,5 +1,5 @@
 
-The RULES have changed. Multifile now works.
+The RULES have changed. Multifile IS NOW ALLOWED
 
 
 

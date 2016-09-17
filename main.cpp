@@ -10,13 +10,15 @@
 //                This version has gone multi-file
 
 
+// ------------ STANDARD LIB INCLUDES ------------ //
+
 #include <iostream>
 #include <fcntl.h>
 #include <string>
 #include <vector>
 #include <cmath>
 
-#ifdef WIN32
+#ifdef win32                    // Used to get sleep function cross platform
 #include <windows.h>
 #else
 #include <unistd.h>
@@ -35,6 +37,7 @@ View view;
 
 void testing(){
 
+
     view.baseTemplate(0);
     zzz(2000);
     view.baseTemplate(1);
@@ -42,6 +45,7 @@ void testing(){
     view.baseTemplate(0);
     zzz(2000);
     view.baseTemplate(1);
+
 }
 
 int main(){
