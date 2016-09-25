@@ -1,5 +1,5 @@
 # Mac - crap
-*.DS_store
+*.DS_Store
 *.ipch
 
 # Compiled Object files
