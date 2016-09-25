@@ -12,7 +12,8 @@
 
 // ------------ STANDARD LIB INCLUDES ------------ //
 
-#define MAIN           // main.cpp
+
+#include <SDL2/SDL.h>
 
 #include <iostream>
 #include <fcntl.h>
@@ -34,26 +35,25 @@
 #include "input.h"
 
 
-
 using namespace std; 
 
 View view;
 
-void testing(){
+void testing() {
 
+    if (init()){
 
-    view.baseTemplate(0);
-    zzz(2000);
-    view.baseTemplate(1);
-    zzz(2000);
-    view.baseTemplate(0);
-    zzz(2000);
-    view.baseTemplate(1);
+        while( !quit ){
 
+            pollEvents();
+
+        }
+    }
 }
 
 int main(){
 
     testing();
+    SDL_Quit();
     return 0;
 }
